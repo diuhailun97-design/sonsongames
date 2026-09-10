@@ -1,62 +1,102 @@
 /* ========================================================
    bee.js - 3. Spelling Bee / Keypad Module
    ======================================================== */
+let allBeeSets = [];
 let beeSets = [];
 let currentBeeSetIdx = 0;
 let currentBeeIdxInSet = 0;
 let beeUserLetters = [];
 
-async function fetchBeeXML() {
+async function parseXMLSets(filename, defaultPlayer) {
   try {
-    const res = await fetch('spellingwords.xml');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(filename);
+    if (!res.ok) return [];
     const xmlText = await res.text();
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
     const setNodes = xmlDoc.getElementsByTagName('set');
-
     const loaded = [];
     for (let s = 0; s < setNodes.length; s++) {
       const qNodes = setNodes[s].getElementsByTagName('question');
       const setName = setNodes[s].getAttribute('name') || `Set ${s + 1}`;
+      const player = setNodes[s].getAttribute('player') || defaultPlayer;
       const questions = [];
       for (let q = 0; q < qNodes.length; q++) {
         const word = qNodes[q].getElementsByTagName('word')[0]?.textContent.trim() || '';
         const hint = qNodes[q].getElementsByTagName('hint')[0]?.textContent.trim() || '';
         const meaning = qNodes[q].getElementsByTagName('meaning')[0]?.textContent.trim() || '';
         if (word.length > 0) {
-          questions.push({ word, hint, meaning, setName });
+          questions.push({ word, hint, meaning, setName, player });
         }
       }
-      if (questions.length > 0) loaded.push(questions);
+      if (questions.length > 0) {
+        questions.player = player;
+        questions.setName = setName;
+        loaded.push(questions);
+      }
+    }
+    return loaded;
+  } catch (e) {
+    return [];
+  }
+}
+
+async function fetchBeeXML() {
+  try {
+    // 1. Try loading separate XML files (spellingwords_younger.xml & spellingwords_older.xml)
+    const [youngerSets, olderSets] = await Promise.all([
+      parseXMLSets('spellingwords_younger.xml', 'younger'),
+      parseXMLSets('spellingwords_older.xml', 'older')
+    ]);
+    let loaded = [...youngerSets, ...olderSets];
+
+    // 2. Fallback to unified spellingwords.xml if separate files are not found
+    if (loaded.length === 0) {
+      loaded = await parseXMLSets('spellingwords.xml', 'younger');
     }
 
     if (loaded.length > 0) {
-      beeSets = loaded;
+      allBeeSets = loaded;
     } else {
-      beeSets = fallbackScrambleSets;
+      allBeeSets = fallbackScrambleYounger;
     }
   } catch (err) {
-    console.warn('Failed to load bee sets, using fallback:', err);
-    beeSets = fallbackScrambleSets;
+    console.warn('Failed to load spelling XML files, using fallback:', err);
+    allBeeSets = fallbackScrambleYounger;
   }
 
+  filterBeeSetsByPlayer();
+}
+
+function filterBeeSetsByPlayer() {
+  const p = getPlayer();
+  beeSets = allBeeSets.filter(s => s.player === p);
+  if (beeSets.length === 0) {
+    beeSets = (p === 'older') ? fallbackScrambleOlder : fallbackScrambleYounger;
+  }
+
+  currentBeeSetIdx = 0;
+  try {
+    const saved = localStorage.getItem(`son_bee_set_${p}`);
+    if (saved !== null) {
+      currentBeeSetIdx = parseInt(saved, 10) || 0;
+      if (currentBeeSetIdx >= beeSets.length) currentBeeSetIdx = 0;
+    }
+  } catch (e) {}
+
+  currentBeeIdxInSet = 0;
   initBeeSetDropdown();
   loadCurrentBeeQuestion();
+}
+
+function onPlayerChangedInBee() {
+  filterBeeSetsByPlayer();
 }
 
 function initBeeSetDropdown() {
   const select = document.getElementById('bee-set-dropdown');
   if (!select) return;
   select.innerHTML = '';
-
-  try {
-    const saved = localStorage.getItem('son_bee_set');
-    if (saved !== null) {
-      currentBeeSetIdx = parseInt(saved, 10) || 0;
-      if (currentBeeSetIdx >= beeSets.length) currentBeeSetIdx = 0;
-    }
-  } catch (e) {}
 
   for (let i = 0; i < beeSets.length; i++) {
     const opt = document.createElement('option');
@@ -77,7 +117,8 @@ function onSelectBeeSet(idx) {
 
 function saveBeeProgress() {
   try {
-    localStorage.setItem('son_bee_set', currentBeeSetIdx);
+    const p = getPlayer();
+    localStorage.setItem(`son_bee_set_${p}`, currentBeeSetIdx);
   } catch (e) {}
 }
 

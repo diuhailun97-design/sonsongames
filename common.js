@@ -1,6 +1,45 @@
 /* ========================================================
-   common.js - Shared Audio, Speech, Navigation & Modals
+   common.js - Shared Audio, Speech, Player Mode & Modals
    ======================================================== */
+
+// Active player state: 'younger' (Younger Bro / Marc) | 'older' (Big Bro / Jasper)
+let currentPlayer = localStorage.getItem('son_active_player') || 'younger';
+
+function getPlayer() {
+  return currentPlayer;
+}
+
+function setPlayer(player) {
+  if (currentPlayer === player) return;
+  currentPlayer = player;
+  try {
+    localStorage.setItem('son_active_player', player);
+  } catch (e) {}
+  updatePlayerUI();
+  
+  // Notify all active game modules to switch question sets
+  if (typeof onPlayerChangedInScramble === 'function') onPlayerChangedInScramble();
+  if (typeof onPlayerChangedInMissing === 'function') onPlayerChangedInMissing();
+  if (typeof onPlayerChangedInBee === 'function') onPlayerChangedInBee();
+}
+
+function togglePlayer() {
+  setPlayer(currentPlayer === 'younger' ? 'older' : 'younger');
+}
+
+function updatePlayerUI() {
+  const youngerBtn = document.getElementById('player-btn-younger');
+  const olderBtn = document.getElementById('player-btn-older');
+  if (youngerBtn && olderBtn) {
+    if (currentPlayer === 'younger') {
+      youngerBtn.classList.add('active');
+      olderBtn.classList.remove('active');
+    } else {
+      olderBtn.classList.add('active');
+      youngerBtn.classList.remove('active');
+    }
+  }
+}
 
 // 1. Web Audio API Synthesizer
 let audioCtx = null;
@@ -22,7 +61,6 @@ function playChime(success = true) {
   const now = ctx.currentTime;
 
   if (success) {
-    // Joyful ascending chord (C5 - E5 - G5 - C6)
     [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -36,7 +74,6 @@ function playChime(success = true) {
       osc.stop(now + idx * 0.08 + 0.45);
     });
   } else {
-    // Gentle error boop
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = 'sawtooth';
@@ -56,11 +93,11 @@ function playFanfare() {
   const ctx = getAudioCtx();
   const now = ctx.currentTime;
   const notes = [
-    { f: 392.00, t: 0.0, d: 0.18 }, // G4
-    { f: 523.25, t: 0.18, d: 0.18 }, // C5
-    { f: 659.25, t: 0.36, d: 0.18 }, // E5
-    { f: 783.99, t: 0.54, d: 0.35 }, // G5
-    { f: 1046.50, t: 0.90, d: 0.70 } // C6
+    { f: 392.00, t: 0.0, d: 0.18 },
+    { f: 523.25, t: 0.18, d: 0.18 },
+    { f: 659.25, t: 0.36, d: 0.18 },
+    { f: 783.99, t: 0.54, d: 0.35 },
+    { f: 1046.50, t: 0.90, d: 0.70 }
   ];
   notes.forEach(n => {
     const osc = ctx.createOscillator();
@@ -106,7 +143,7 @@ function speakWord(word) {
   window.speechSynthesis.cancel();
 
   const utterance = new SpeechSynthesisUtterance(word);
-  utterance.rate = 0.85; // slightly slower for clear comprehension
+  utterance.rate = 0.85;
   utterance.pitch = 1.05;
 
   const voices = window.speechSynthesis.getVoices();
@@ -285,8 +322,8 @@ function launchConfetti() {
   render();
 }
 
-// Global initialization
 window.addEventListener('DOMContentLoaded', () => {
+  updatePlayerUI();
   if ('speechSynthesis' in window) {
     window.speechSynthesis.onvoiceschanged = () => {
       window.speechSynthesis.getVoices();

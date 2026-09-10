@@ -1,92 +1,123 @@
 /* ========================================================
    scramble.js - 1. Word Scramble Module
    ======================================================== */
-let scrambleSets = [];
+let allScrambleSets = []; // All sets loaded from XML
+let scrambleSets = [];    // Filtered by currentPlayer
 let currentScrambleSetIdx = 0;
 let currentScrambleIdxInSet = 0;
 let scrambleUserLetters = [];
 let scrambleTilesState = [];
 
-const fallbackScrambleSets = [
+const fallbackScrambleYounger = [
   [
     { word: "people", hint: "Many ______ came to watch the football match.", meaning: "Human beings in general." },
     { word: "thought", hint: "She ______ that it was going to rain today.", meaning: "Past tense of think." },
     { word: "parents", hint: "Both of my ______ helped me bake a chocolate cake.", meaning: "A father and mother." },
     { word: "would", hint: "If it is sunny tomorrow, we ______ love to go to the beach.", meaning: "Expressing a wish or condition." },
-    { word: "through", hint: "The red train travelled ______ the long dark tunnel.", meaning: "Moving in one side and out the opposite side." },
-    { word: "should", hint: "You ______ always wash your hands before eating.", meaning: "Indicating obligation or duty." },
-    { word: "friend", hint: "Marc played tag with his best ______ in the playground.", meaning: "A person whom one knows and likes." },
-    { word: "house", hint: "We built a cosy blanket fort inside our warm ______.", meaning: "A building for human habitation." },
-    { word: "laugh", hint: "The funny clown made all the children ______ loudly.", meaning: "Make sounds of amusement." },
-    { word: "because", hint: "I wore my thick coat ______ it was freezing outside.", meaning: "For the reason that." }
-  ],
-  [
-    { word: "January", hint: "The first month of the brand new year is ______.", meaning: "The 1st month of the year." },
-    { word: "February", hint: "The shortest month with 28 or 29 days is ______.", meaning: "The 2nd month of the year." },
-    { word: "March", hint: "Spring begins and grass starts growing in ______.", meaning: "The 3rd month of the year." },
-    { word: "April", hint: "We love hunting for Easter eggs in ______.", meaning: "The 4th month of the year." },
-    { word: "May", hint: "Mother's Day is celebrated on a sunny Sunday in ______.", meaning: "The 5th month of the year." },
-    { word: "June", hint: "The sixth month when the weather turns warm is ______.", meaning: "The 6th month of the year." },
-    { word: "July", hint: "School finishes and summer holiday starts in ______.", meaning: "The 7th month of the year." },
-    { word: "August", hint: "We love building sandcastles at the beach in ______.", meaning: "The 8th month of the year." },
-    { word: "September", hint: "Children pack new bags and go back to school in ______.", meaning: "The 9th month of the year." },
-    { word: "October", hint: "We dress up for Halloween in ______.", meaning: "The 10th month of the year." },
-    { word: "November", hint: "People watch bright fireworks in ______.", meaning: "The 11th month of the year." },
-    { word: "December", hint: "The twelfth month when we decorate our Christmas tree is ______.", meaning: "The 12th month of the year." }
+    { word: "through", hint: "The red train travelled ______ the long dark tunnel.", meaning: "Moving in one side and out the opposite side." }
   ]
 ];
 
-async function fetchScrambleXML() {
+const fallbackScrambleOlder = [
+  [
+    { word: "accommodate", hint: "The hotel had enough rooms to ______ all the guests.", meaning: "Provide lodging or space for." },
+    { word: "guarantee", hint: "The shop gave a two-year ______ with the laptop.", meaning: "A formal assurance or promise." },
+    { word: "rhythm", hint: "He tapped his foot to the catchy musical ______.", meaning: "A strong repeated pattern of sound." },
+    { word: "conscience", hint: "His guilty ______ told him to admit his mistake.", meaning: "An inner sense of right and wrong." },
+    { word: "necessary", hint: "It is ______ to pack your passport for travelling.", meaning: "Essential and required." }
+  ]
+];
+
+async function parseXMLSets(filename, defaultPlayer) {
   try {
-    const res = await fetch('spellingwords.xml');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(filename);
+    if (!res.ok) return [];
     const xmlText = await res.text();
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
     const setNodes = xmlDoc.getElementsByTagName('set');
-
     const loaded = [];
     for (let s = 0; s < setNodes.length; s++) {
       const qNodes = setNodes[s].getElementsByTagName('question');
       const setName = setNodes[s].getAttribute('name') || `Set ${s + 1}`;
+      const player = setNodes[s].getAttribute('player') || defaultPlayer;
       const questions = [];
       for (let q = 0; q < qNodes.length; q++) {
         const word = qNodes[q].getElementsByTagName('word')[0]?.textContent.trim() || '';
         const hint = qNodes[q].getElementsByTagName('hint')[0]?.textContent.trim() || '';
         const meaning = qNodes[q].getElementsByTagName('meaning')[0]?.textContent.trim() || '';
         if (word.length > 0) {
-          questions.push({ word, hint, meaning, setName });
+          questions.push({ word, hint, meaning, setName, player });
         }
       }
-      if (questions.length > 0) loaded.push(questions);
+      if (questions.length > 0) {
+        questions.player = player;
+        questions.setName = setName;
+        loaded.push(questions);
+      }
+    }
+    return loaded;
+  } catch (e) {
+    return [];
+  }
+}
+
+async function fetchScrambleXML() {
+  try {
+    // 1. Try loading separate XML files (spellingwords_younger.xml & spellingwords_older.xml)
+    const [youngerSets, olderSets] = await Promise.all([
+      parseXMLSets('spellingwords_younger.xml', 'younger'),
+      parseXMLSets('spellingwords_older.xml', 'older')
+    ]);
+    let loaded = [...youngerSets, ...olderSets];
+
+    // 2. Fallback to unified spellingwords.xml if separate files are not found
+    if (loaded.length === 0) {
+      loaded = await parseXMLSets('spellingwords.xml', 'younger');
     }
 
     if (loaded.length > 0) {
-      scrambleSets = loaded;
+      allScrambleSets = loaded;
     } else {
-      scrambleSets = fallbackScrambleSets;
+      allScrambleSets = fallbackScrambleYounger;
     }
   } catch (err) {
-    console.warn('Failed to load spellingwords.xml, using fallback sets:', err);
-    scrambleSets = fallbackScrambleSets;
+    console.warn('Failed to load spelling XML files, using fallback:', err);
+    allScrambleSets = fallbackScrambleYounger;
   }
 
+  filterScrambleSetsByPlayer();
+}
+
+function filterScrambleSetsByPlayer() {
+  const p = getPlayer();
+  scrambleSets = allScrambleSets.filter(s => s.player === p);
+  if (scrambleSets.length === 0) {
+    scrambleSets = (p === 'older') ? fallbackScrambleOlder : fallbackScrambleYounger;
+  }
+
+  currentScrambleSetIdx = 0;
+  try {
+    const saved = localStorage.getItem(`son_scramble_set_${p}`);
+    if (saved !== null) {
+      currentScrambleSetIdx = parseInt(saved, 10) || 0;
+      if (currentScrambleSetIdx >= scrambleSets.length) currentScrambleSetIdx = 0;
+    }
+  } catch (e) {}
+
+  currentScrambleIdxInSet = 0;
   initScrambleSetDropdown();
   loadCurrentScrambleQuestion();
+}
+
+function onPlayerChangedInScramble() {
+  filterScrambleSetsByPlayer();
 }
 
 function initScrambleSetDropdown() {
   const select = document.getElementById('scramble-set-dropdown');
   if (!select) return;
   select.innerHTML = '';
-
-  try {
-    const saved = localStorage.getItem('son_scramble_set');
-    if (saved !== null) {
-      currentScrambleSetIdx = parseInt(saved, 10) || 0;
-      if (currentScrambleSetIdx >= scrambleSets.length) currentScrambleSetIdx = 0;
-    }
-  } catch (e) {}
 
   for (let i = 0; i < scrambleSets.length; i++) {
     const opt = document.createElement('option');
@@ -107,7 +138,8 @@ function onSelectScrambleSet(idx) {
 
 function saveScrambleProgress() {
   try {
-    localStorage.setItem('son_scramble_set', currentScrambleSetIdx);
+    const p = getPlayer();
+    localStorage.setItem(`son_scramble_set_${p}`, currentScrambleSetIdx);
   } catch (e) {}
 }
 

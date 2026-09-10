@@ -1,63 +1,103 @@
 /* ========================================================
    missing.js - 2. Missing Letters Module
    ======================================================== */
+let allMissingSets = [];
 let missingSets = [];
 let currentMissingSetIdx = 0;
 let currentMissingIdxInSet = 0;
 let missingTargetIndices = [];
 let missingUserWord = [];
 
-async function fetchMissingXML() {
+async function parseXMLSets(filename, defaultPlayer) {
   try {
-    const res = await fetch('spellingwords.xml');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(filename);
+    if (!res.ok) return [];
     const xmlText = await res.text();
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
     const setNodes = xmlDoc.getElementsByTagName('set');
-
     const loaded = [];
     for (let s = 0; s < setNodes.length; s++) {
       const qNodes = setNodes[s].getElementsByTagName('question');
       const setName = setNodes[s].getAttribute('name') || `Set ${s + 1}`;
+      const player = setNodes[s].getAttribute('player') || defaultPlayer;
       const questions = [];
       for (let q = 0; q < qNodes.length; q++) {
         const word = qNodes[q].getElementsByTagName('word')[0]?.textContent.trim() || '';
         const hint = qNodes[q].getElementsByTagName('hint')[0]?.textContent.trim() || '';
         const meaning = qNodes[q].getElementsByTagName('meaning')[0]?.textContent.trim() || '';
         if (word.length > 0) {
-          questions.push({ word, hint, meaning, setName });
+          questions.push({ word, hint, meaning, setName, player });
         }
       }
-      if (questions.length > 0) loaded.push(questions);
+      if (questions.length > 0) {
+        questions.player = player;
+        questions.setName = setName;
+        loaded.push(questions);
+      }
+    }
+    return loaded;
+  } catch (e) {
+    return [];
+  }
+}
+
+async function fetchMissingXML() {
+  try {
+    // 1. Try loading separate XML files (spellingwords_younger.xml & spellingwords_older.xml)
+    const [youngerSets, olderSets] = await Promise.all([
+      parseXMLSets('spellingwords_younger.xml', 'younger'),
+      parseXMLSets('spellingwords_older.xml', 'older')
+    ]);
+    let loaded = [...youngerSets, ...olderSets];
+
+    // 2. Fallback to unified spellingwords.xml if separate files are not found
+    if (loaded.length === 0) {
+      loaded = await parseXMLSets('spellingwords.xml', 'younger');
     }
 
     if (loaded.length > 0) {
-      missingSets = loaded;
+      allMissingSets = loaded;
     } else {
-      missingSets = fallbackScrambleSets;
+      allMissingSets = fallbackScrambleYounger;
     }
   } catch (err) {
-    console.warn('Failed to load missing letters sets, using fallback:', err);
-    missingSets = fallbackScrambleSets;
+    console.warn('Failed to load spelling XML files, using fallback:', err);
+    allMissingSets = fallbackScrambleYounger;
   }
 
+  filterMissingSetsByPlayer();
+}
+
+function filterMissingSetsByPlayer() {
+  const p = getPlayer();
+  missingSets = allMissingSets.filter(s => s.player === p);
+  if (missingSets.length === 0) {
+    missingSets = (p === 'older') ? fallbackScrambleOlder : fallbackScrambleYounger;
+  }
+
+  currentMissingSetIdx = 0;
+  try {
+    const saved = localStorage.getItem(`son_missing_set_${p}`);
+    if (saved !== null) {
+      currentMissingSetIdx = parseInt(saved, 10) || 0;
+      if (currentMissingSetIdx >= missingSets.length) currentMissingSetIdx = 0;
+    }
+  } catch (e) {}
+
+  currentMissingIdxInSet = 0;
   initMissingSetDropdown();
   loadCurrentMissingQuestion();
+}
+
+function onPlayerChangedInMissing() {
+  filterMissingSetsByPlayer();
 }
 
 function initMissingSetDropdown() {
   const select = document.getElementById('missing-set-dropdown');
   if (!select) return;
   select.innerHTML = '';
-
-  try {
-    const saved = localStorage.getItem('son_missing_set');
-    if (saved !== null) {
-      currentMissingSetIdx = parseInt(saved, 10) || 0;
-      if (currentMissingSetIdx >= missingSets.length) currentMissingSetIdx = 0;
-    }
-  } catch (e) {}
 
   for (let i = 0; i < missingSets.length; i++) {
     const opt = document.createElement('option');
@@ -78,7 +118,8 @@ function onSelectMissingSet(idx) {
 
 function saveMissingProgress() {
   try {
-    localStorage.setItem('son_missing_set', currentMissingSetIdx);
+    const p = getPlayer();
+    localStorage.setItem(`son_missing_set_${p}`, currentMissingSetIdx);
   } catch (e) {}
 }
 
