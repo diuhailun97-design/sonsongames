@@ -322,6 +322,72 @@ function launchConfetti() {
   render();
 }
 
+
+// 4. Dynamic Tile Dimension Calculator (Strictly No Wrapping)
+function getTileDimensions(wordLen) {
+  if (wordLen <= 6) {
+    return { width: '64px', height: '76px', fontSize: '36px', gap: '10px' };
+  } else if (wordLen <= 8) {
+    return { width: '56px', height: '70px', fontSize: '32px', gap: '8px' };
+  } else if (wordLen <= 10) {
+    return { width: '50px', height: '64px', fontSize: '28px', gap: '6px' };
+  } else if (wordLen <= 11) {
+    return { width: '46px', height: '60px', fontSize: '26px', gap: '5px' };
+  } else {
+    return { width: '40px', height: '54px', fontSize: '23px', gap: '4px' };
+  }
+}
+
+// 5. Speech Synthesis - Full Sentence Reading
+function speakSentence(sentence) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(sentence);
+  utterance.rate = 0.88;
+  utterance.pitch = 1.0;
+
+  const voices = window.speechSynthesis.getVoices();
+  const ukVoice = voices.find(v => v.lang.includes('en-GB') || v.name.includes('British') || v.name.includes('Daniel') || v.name.includes('Oliver') || v.name.includes('George'));
+  if (ukVoice) {
+    utterance.voice = ukVoice;
+  } else {
+    utterance.lang = 'en-GB';
+  }
+
+  window.speechSynthesis.speak(utterance);
+}
+
+function speakCurrentSentence(mode) {
+  let q = null;
+  if (mode === 'scramble' && typeof scrambleSets !== 'undefined' && scrambleSets[currentScrambleSetIdx]) {
+    q = scrambleSets[currentScrambleSetIdx][currentScrambleIdxInSet];
+  } else if (mode === 'missing' && typeof missingSets !== 'undefined' && missingSets[currentMissingSetIdx]) {
+    q = missingSets[currentMissingSetIdx][currentMissingIdxInSet];
+  } else if (mode === 'bee' && typeof beeSets !== 'undefined' && beeSets[currentBeeSetIdx]) {
+    q = beeSets[currentBeeSetIdx][currentBeeIdxInSet];
+  }
+  if (!q || !q.hint) return;
+
+  // Substitute blanks like ______ with the actual word so the sentence is read smoothly and naturally
+  const completedSentence = q.hint.replace(/_{2,}/g, q.word);
+  speakSentence(completedSentence);
+}
+
+function replayCurrentWord(mode) {
+  let q = null;
+  if (mode === 'scramble' && typeof scrambleSets !== 'undefined' && scrambleSets[currentScrambleSetIdx]) {
+    q = scrambleSets[currentScrambleSetIdx][currentScrambleIdxInSet];
+  } else if (mode === 'missing' && typeof missingSets !== 'undefined' && missingSets[currentMissingSetIdx]) {
+    q = missingSets[currentMissingSetIdx][currentMissingIdxInSet];
+  } else if (mode === 'bee' && typeof beeSets !== 'undefined' && beeSets[currentBeeSetIdx]) {
+    q = beeSets[currentBeeSetIdx][currentBeeIdxInSet];
+  }
+  if (q && q.word) {
+    speakWord(q.word);
+  }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   updatePlayerUI();
   if ('speechSynthesis' in window) {

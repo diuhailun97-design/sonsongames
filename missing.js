@@ -1,3 +1,5 @@
+function replayMissingVoice() { replayCurrentWord('missing'); }
+
 /* ========================================================
    missing.js - 2. Missing Letters Module
    ======================================================== */
@@ -167,13 +169,20 @@ function loadCurrentMissingQuestion() {
     missingUserWord[idx] = '';
   });
 
+  const dims = getTileDimensions(len);
   const slotsContainer = document.getElementById('missing-slots');
   if (slotsContainer) {
     slotsContainer.innerHTML = '';
+    slotsContainer.style.gap = dims.gap;
     for (let i = 0; i < len; i++) {
       const slot = document.createElement('div');
       slot.className = 'char-box';
       slot.id = `missing-slot-${i}`;
+      slot.style.width = dims.width;
+      slot.style.minWidth = dims.width;
+      slot.style.maxWidth = dims.width;
+      slot.style.height = dims.height;
+      slot.style.fontSize = dims.fontSize;
       if (missingTargetIndices.includes(i)) {
         slot.classList.add('blank');
         slot.innerText = '？';

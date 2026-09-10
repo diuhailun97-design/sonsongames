@@ -153,13 +153,20 @@ function loadCurrentBeeQuestion() {
   const len = q.word.length;
   beeUserLetters = new Array(len).fill('');
 
+  const dims = getTileDimensions(len);
   const slotsContainer = document.getElementById('bee-slots');
   if (slotsContainer) {
     slotsContainer.innerHTML = '';
+    slotsContainer.style.gap = dims.gap;
     for (let i = 0; i < len; i++) {
       const slot = document.createElement('div');
       slot.className = 'char-box blank';
       slot.id = `bee-slot-${i}`;
+      slot.style.width = dims.width;
+      slot.style.minWidth = dims.width;
+      slot.style.maxWidth = dims.width;
+      slot.style.height = dims.height;
+      slot.style.fontSize = dims.fontSize;
       slot.innerText = '';
       slot.onclick = () => deleteBeeLastLetter();
       slotsContainer.appendChild(slot);

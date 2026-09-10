@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <spellingGame>
-  <!-- ==================== YOUNGER BRO SETS (Marc - Year 3/4) ==================== -->
+  <!-- ==================== YOUNGER BRO SETS (Marc - Year 4) ==================== -->
   <set id="1" player="younger" name="Set 1: Tricky Exception Words">
     <question id="1">
       <word>people</word>
@@ -237,7 +237,7 @@
       <category>Core Vocabulary</category>
     </question>
   </set>
-  <!-- ==================== BIG BRO SETS (Jasper - Year 5/6 Statutory Spellings) ==================== -->
+  <!-- ==================== BIG BRO SETS (Jasper - Year 6 Statutory Spellings) ==================== -->
   <set id="5" player="older" name="Set 1: Column 1 (accommodate – bruise)">
     <question id="1">
       <word>accommodate</word>

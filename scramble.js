@@ -1,3 +1,5 @@
+function replayScrambleVoice() { replayCurrentWord('scramble'); }
+
 /* ========================================================
    scramble.js - 1. Word Scramble Module
    ======================================================== */
@@ -173,14 +175,21 @@ function loadCurrentScrambleQuestion() {
 
   const wordLen = q.word.length;
   scrambleUserLetters = new Array(wordLen).fill('');
+  const dims = getTileDimensions(wordLen);
 
   const slotsContainer = document.getElementById('scramble-slots');
   if (slotsContainer) {
     slotsContainer.innerHTML = '';
+    slotsContainer.style.gap = dims.gap;
     for (let i = 0; i < wordLen; i++) {
       const slot = document.createElement('div');
       slot.className = 'char-box blank';
       slot.id = `scramble-slot-${i}`;
+      slot.style.width = dims.width;
+      slot.style.minWidth = dims.width;
+      slot.style.maxWidth = dims.width;
+      slot.style.height = dims.height;
+      slot.style.fontSize = dims.fontSize;
       slot.innerText = '';
       slot.onclick = () => returnScrambleLetter(i);
       slotsContainer.appendChild(slot);
@@ -203,10 +212,20 @@ function renderScrambleTiles() {
   if (!container) return;
   container.innerHTML = '';
 
+  const curSet = scrambleSets[currentScrambleSetIdx];
+  const wordLen = curSet ? curSet[currentScrambleIdxInSet].word.length : 8;
+  const dims = getTileDimensions(wordLen);
+  container.style.gap = dims.gap;
+
   scrambleTilesState.forEach((tile, idx) => {
     const btn = document.createElement('button');
     btn.className = 'option-btn' + (tile.used ? ' used' : '');
     btn.id = `scramble-tile-${idx}`;
+    btn.style.width = dims.width;
+    btn.style.minWidth = dims.width;
+    btn.style.maxWidth = dims.width;
+    btn.style.height = dims.height;
+    btn.style.fontSize = dims.fontSize;
     btn.innerText = tile.char;
     btn.onclick = () => onSelectScrambleTile(idx);
     container.appendChild(btn);

@@ -259,28 +259,49 @@
     .chars-display-row {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
-      min-height: 80px;
+      align-items: center;
+      flex-wrap: nowrap !important; /* STRICTLY NO WRAPPING */
+      gap: 8px;
+      margin-bottom: 18px;
+      min-height: 64px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: auto;
+      padding: 4px 2px;
+    }
+
+    #scramble-tiles {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap !important; /* STRICTLY NO WRAPPING */
+      gap: 8px;
+      margin-bottom: 24px;
+      min-height: 64px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: auto;
+      padding: 4px 2px;
     }
 
     .char-box {
-      min-width: 58px;
-      height: 74px;
-      padding: 0 10px;
+      box-sizing: border-box;
       border: 3px solid #666;
-      border-radius: 14px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
       font-weight: 800;
       background: #FFF;
       color: var(--text-main);
       box-shadow: 0 3px 6px rgba(0,0,0,0.05);
       cursor: pointer;
       touch-action: manipulation;
+      user-select: none;
+      flex-shrink: 0;
+      padding: 0;
     }
 
     .char-box.blank {
@@ -294,18 +315,57 @@
       color: var(--secondary);
     }
 
+    .hint-card {
+      background: #FFF;
+      border: 2px dashed #E0D9C8;
+      border-radius: 14px;
+      padding: 14px 20px;
+      max-width: 96%;
+      margin: 0 auto 10px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-sizing: border-box;
+    }
+
     .hint-text {
       font-size: 22px;
-      font-weight: bold;
-      color: #333;
-      background: #FFF;
-      padding: 12px 18px;
-      border-radius: 10px;
-      border: 2px dashed #E0D9C8;
-      display: inline-block;
-      max-width: 95%;
+      font-weight: 700;
+      color: #2C2A29;
       line-height: 1.5;
-      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .sentence-speak-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #EDF6F9;
+      color: #1D3557;
+      border: 2px solid #457B9D;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.06);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      touch-action: manipulation;
+      user-select: none;
+    }
+
+    .sentence-speak-btn:hover {
+      background: #457B9D;
+      color: #FFFFFF;
+      border-color: #1D3557;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 12px rgba(69, 123, 157, 0.25);
+    }
+
+    .sentence-speak-btn:active {
+      transform: scale(0.96);
     }
 
     .meaning-text {
@@ -325,12 +385,9 @@
     }
 
     .option-btn {
-      min-width: 60px;
-      height: 70px;
-      padding: 0 14px;
-      font-size: 32px;
+      box-sizing: border-box;
       font-weight: bold;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 3px solid var(--secondary);
       background: #FFF;
       color: var(--secondary);
@@ -341,6 +398,9 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.06);
       touch-action: manipulation;
       transition: all 0.15s ease;
+      user-select: none;
+      flex-shrink: 0;
+      padding: 0;
     }
 
     .option-btn:active {
@@ -543,13 +603,13 @@
       <div class="header-controls">
         <!-- Switch between Big Bro & Younger Bro -->
         <div class="player-switch-wrap">
-          <button id="player-btn-younger" class="player-btn active" onclick="setPlayer('younger')">🧒 Younger Bro</button>
-          <button id="player-btn-older" class="player-btn" onclick="setPlayer('older')">👦 Big Bro</button>
+          <button id="player-btn-younger" class="player-btn active" onclick="setPlayer('younger')">🧒 Marc (Year 4)</button>
+          <button id="player-btn-older" class="player-btn" onclick="setPlayer('older')">👦 Jasper (Year 6)</button>
         </div>
         <button class="sound-btn" id="sound-toggle-btn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
       </div>
     </div>
-    <div class="subtitle">Interactive Touch Spelling Games for iPad • Practice & Learn!</div>
+    <div class="subtitle">Interactive Spelling Games for iPad • Marc (Year 4) & Jasper (Year 6)</div>
   </header>
 
   <!-- Navigation Tabs -->
@@ -569,9 +629,14 @@
       </div>
     </div>
     <div class="question-box">
-      <button class="speaker-icon-btn" onclick="speakWord(scrambleSets[currentScrambleSetIdx][currentScrambleIdxInSet].word)" title="Pronounce Word">🔊</button>
+      <button class="speaker-icon-btn" onclick="replayCurrentWord('scramble')" title="Pronounce Word">🔊</button>
       <div class="chars-display-row" id="scramble-slots"></div>
-      <div class="hint-text" id="scramble-hint">...</div>
+      <div class="hint-card">
+        <div class="hint-text" id="scramble-hint">...</div>
+        <button class="sentence-speak-btn" onclick="speakCurrentSentence('scramble')" title="Read whole sentence aloud">
+          <span>🔊</span> Read Sentence
+        </button>
+      </div>
       <div class="meaning-text" id="scramble-meaning">...</div>
     </div>
     <div class="options-grid" id="scramble-tiles"></div>
@@ -596,9 +661,14 @@
       </div>
     </div>
     <div class="question-box">
-      <button class="speaker-icon-btn" onclick="speakWord(missingSets[currentMissingSetIdx][currentMissingIdxInSet].word)" title="Pronounce Word">🔊</button>
+      <button class="speaker-icon-btn" onclick="replayCurrentWord('missing')" title="Pronounce Word">🔊</button>
       <div class="chars-display-row" id="missing-slots"></div>
-      <div class="hint-text" id="missing-hint">...</div>
+      <div class="hint-card">
+        <div class="hint-text" id="missing-hint">...</div>
+        <button class="sentence-speak-btn" onclick="speakCurrentSentence('missing')" title="Read whole sentence aloud">
+          <span>🔊</span> Read Sentence
+        </button>
+      </div>
       <div class="meaning-text" id="missing-meaning">...</div>
     </div>
     <div class="options-grid" id="missing-options"></div>
@@ -619,9 +689,14 @@
       </div>
     </div>
     <div class="question-box">
-      <button class="speaker-icon-btn" onclick="replayBeeVoice()" title="Pronounce Word">🔊</button>
+      <button class="speaker-icon-btn" onclick="replayCurrentWord('bee')" title="Pronounce Word">🔊</button>
       <div class="chars-display-row" id="bee-slots"></div>
-      <div class="hint-text" id="bee-hint">...</div>
+      <div class="hint-card">
+        <div class="hint-text" id="bee-hint">...</div>
+        <button class="sentence-speak-btn" onclick="speakCurrentSentence('bee')" title="Read whole sentence aloud">
+          <span>🔊</span> Read Sentence
+        </button>
+      </div>
       <div class="meaning-text" id="bee-meaning">...</div>
     </div>
     <div id="bee-keypad" style="width: 100%; max-width: 650px; margin-bottom: 16px;"></div>
