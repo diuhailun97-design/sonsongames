@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spellingGame totalSets="4">
+  <set id="1" name="Set 1: Tricky Exception Words (Year 4)">
+    <question id="1">
+      <word>people</word>
+      <hint>Many ______ came to watch the school football match.</hint>
+      <meaning>Human beings in general; a community of individuals.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="2">
+      <word>thought</word>
+      <hint>She ______ that it was going to rain today.</hint>
+      <meaning>Past tense of think; had an idea or opinion.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="3">
+      <word>parents</word>
+      <hint>Both of my ______ helped me bake a chocolate cake.</hint>
+      <meaning>A father and mother.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="4">
+      <word>would</word>
+      <hint>If it is sunny tomorrow, we ______ love to go to the beach.</hint>
+      <meaning>Expressing a wish, intention, or condition.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="5">
+      <word>through</word>
+      <hint>The red train travelled ______ the long dark tunnel.</hint>
+      <meaning>Moving in one side and out the opposite side.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="6">
+      <word>should</word>
+      <hint>You ______ always wash your hands before eating dinner.</hint>
+      <meaning>Used to indicate what is proper or the best action.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="7">
+      <word>friend</word>
+      <hint>Marc played tag in the playground with his best ______.</hint>
+      <meaning>A person whom one knows, likes, and trusts.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="8">
+      <word>house</word>
+      <hint>We built a cosy blanket fort inside our warm ______.</hint>
+      <meaning>A building for human habitation.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="9">
+      <word>laugh</word>
+      <hint>The funny clown made all the children ______ loudly.</hint>
+      <meaning>Make spontaneous sounds of amusement and joy.</meaning>
+      <category>Tricky Words</category>
+    </question>
+    <question id="10">
+      <word>because</word>
+      <hint>I wore my thick winter coat ______ it was freezing outside.</hint>
+      <meaning>For the reason that; since.</meaning>
+      <category>Tricky Words</category>
+    </question>
+  </set>
+  <set id="2" name="Set 2: The 12 Months of the Year">
+    <question id="1">
+      <word>January</word>
+      <hint>The first month of the brand new year is ______.</hint>
+      <meaning>The 1st month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="2">
+      <word>February</word>
+      <hint>The shortest month with only 28 or 29 days is ______.</hint>
+      <meaning>The 2nd month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="3">
+      <word>March</word>
+      <hint>Spring begins and yellow daffodils bloom in windy ______.</hint>
+      <meaning>The 3rd month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="4">
+      <word>April</word>
+      <hint>Spring showers and fun Easter egg hunts arrive in ______.</hint>
+      <meaning>The 4th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="5">
+      <word>May</word>
+      <hint>Mother's Day is celebrated on a sunny Sunday in ______.</hint>
+      <meaning>The 5th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="6">
+      <word>June</word>
+      <hint>The sixth month when the weather turns warm is ______.</hint>
+      <meaning>The 6th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="7">
+      <word>July</word>
+      <hint>School finishes and our long summer holiday starts in ______.</hint>
+      <meaning>The 7th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="8">
+      <word>August</word>
+      <hint>We love swimming and building sandcastles at the beach in ______.</hint>
+      <meaning>The 8th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="9">
+      <word>September</word>
+      <hint>Children pack new school bags and return to school in ______.</hint>
+      <meaning>The 9th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="10">
+      <word>October</word>
+      <hint>We dress up in spooky costumes for Halloween in ______.</hint>
+      <meaning>The 10th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="11">
+      <word>November</word>
+      <hint>People watch bright fireworks fill the dark night sky in ______.</hint>
+      <meaning>The 11th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+    <question id="12">
+      <word>December</word>
+      <hint>The twelfth month when we decorate our Christmas tree is ______.</hint>
+      <meaning>The 12th month of the year.</meaning>
+      <category>Months</category>
+    </question>
+  </set>
+  <set id="3" name="Set 3: Transport &amp; Vehicles">
+    <question id="1">
+      <word>airplane</word>
+      <hint>The huge ______ flew high above the fluffy white clouds.</hint>
+      <meaning>A powered flying vehicle with fixed wings.</meaning>
+      <category>Transport</category>
+    </question>
+    <question id="2">
+      <word>bicycle</word>
+      <hint>He always wears a safety helmet when riding his ______.</hint>
+      <meaning>A two-wheeled vehicle that you pedal.</meaning>
+      <category>Transport</category>
+    </question>
+    <question id="3">
+      <word>helicopter</word>
+      <hint>The search-and-rescue ______ hovered above the open hills.</hint>
+      <meaning>An aircraft with large rotating blades overhead.</meaning>
+      <category>Transport</category>
+    </question>
+    <question id="4">
+      <word>passenger</word>
+      <hint>Every ______ on the flight must fasten their seatbelt.</hint>
+      <meaning>A traveller in a vehicle who is not the driver.</meaning>
+      <category>Transport</category>
+    </question>
+    <question id="5">
+      <word>station</word>
+      <hint>The electric train stopped right by platform 2 of the ______.</hint>
+      <meaning>A regular stopping place along a railway line.</meaning>
+      <category>Transport</category>
+    </question>
+    <question id="6">
+      <word>underground</word>
+      <hint>We rode the city ______ metro train to visit the museum.</hint>
+      <meaning>An urban railway system operating in tunnels.</meaning>
+      <category>Transport</category>
+    </question>
+    <question id="7">
+      <word>harbour</word>
+      <hint>Fishing boats returned safely from the storm into the ______.</hint>
+      <meaning>A sheltered body of water where ships can dock.</meaning>
+      <category>Transport</category>
+    </question>
+    <question id="8">
+      <word>journey</word>
+      <hint>We packed tasty snacks for our long motorway ______.</hint>
+      <meaning>An act of travelling from one place to another.</meaning>
+      <category>Transport</category>
+    </question>
+  </set>
+  <set id="4" name="Set 4: Year 4 Suffixes &amp; Phonics">
+    <question id="1">
+      <word>information</word>
+      <hint>We searched the non-fiction books to find useful ______.</hint>
+      <meaning>Facts and knowledge provided or learned.</meaning>
+      <category>Suffixes (-tion)</category>
+    </question>
+    <question id="2">
+      <word>invention</word>
+      <hint>The electric lightbulb was a world-changing ______.</hint>
+      <meaning>A brand new useful machine, device, or process.</meaning>
+      <category>Suffixes (-tion)</category>
+    </question>
+    <question id="3">
+      <word>decision</word>
+      <hint>After thinking for a long time, she made a wise ______.</hint>
+      <meaning>A conclusion or choice made after consideration.</meaning>
+      <category>Suffixes (-sion)</category>
+    </question>
+    <question id="4">
+      <word>question</word>
+      <hint>Marc raised his hand politely to ask the teacher a ______.</hint>
+      <meaning>A sentence worded to elicit information.</meaning>
+      <category>Core Vocabulary</category>
+    </question>
+    <question id="5">
+      <word>dangerous</word>
+      <hint>Running across a busy motorway road is extremely ______.</hint>
+      <meaning>Able or likely to cause harm, injury, or pain.</meaning>
+      <category>Suffixes (-ous)</category>
+    </question>
+    <question id="6">
+      <word>famous</word>
+      <hint>The ______ footballer scored three goals in the cup final.</hint>
+      <meaning>Known by very many people far and wide.</meaning>
+      <category>Suffixes (-ous)</category>
+    </question>
+    <question id="7">
+      <word>curious</word>
+      <hint>The ______ puppy sniffed around every corner of the house.</hint>
+      <meaning>Eager to know or learn something new.</meaning>
+      <category>Suffixes (-ous)</category>
+    </question>
+    <question id="8">
+      <word>adventure</word>
+      <hint>Exploring the enchanted forest was an unforgettable ______.</hint>
+      <meaning>An exciting, unusual, and thrilling experience.</meaning>
+      <category>Core Vocabulary</category>
+    </question>
+  </set>
+</spellingGame>
