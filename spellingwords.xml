@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <spellingGame>
-  <!-- ==================== YOUNGER BRO SETS (Marc - Year 4) ==================== -->
   <set id="1" player="younger" name="Set 1: Tricky Exception Words">
     <question id="1">
       <word>people</word>
@@ -237,8 +236,193 @@
       <category>Core Vocabulary</category>
     </question>
   </set>
-  <!-- ==================== BIG BRO SETS (Jasper - Year 6 Statutory Spellings) ==================== -->
-  <set id="5" player="older" name="Set 1: Column 1 (accommodate – bruise)">
+  <set id="5" player="younger" name="Set 5: Phonics – 'AU' Sound">
+    <question id="1">
+      <word>author</word>
+      <hint>The talented ______ signed copies of her new storybook.</hint>
+      <meaning>A person who writes books, stories, or articles.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="2">
+      <word>autumn</word>
+      <hint>Golden leaves fall from the trees during chilly ______ days.</hint>
+      <meaning>The season between summer and winter.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="3">
+      <word>launch</word>
+      <hint>The space rocket will ______ into the sky at midnight.</hint>
+      <meaning>Set a boat or rocket in motion, or start an activity.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="4">
+      <word>pause</word>
+      <hint>Marc pressed the button to ______ his favourite cartoon.</hint>
+      <meaning>A temporary stop or hesitation in an action.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="5">
+      <word>sauce</word>
+      <hint>We poured delicious warm tomato ______ over our pasta.</hint>
+      <meaning>A liquid or semi-solid substance served with food.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="6">
+      <word>fault</word>
+      <hint>It was not your ______ that the glass slipped and broke.</hint>
+      <meaning>Responsibility for a mistake or an error.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="7">
+      <word>haunt</word>
+      <hint>Old ghost stories say a phantom spirit is said to ______ the castle.</hint>
+      <meaning>Manifest itself in or visit a place as a ghost.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="8">
+      <word>applaud</word>
+      <hint>The audience began to cheer and ______ after the piano recital.</hint>
+      <meaning>Show approval or praise by clapping hands.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="9">
+      <word>caution</word>
+      <hint>A bright yellow sign warned drivers to proceed with ______.</hint>
+      <meaning>Care taken to avoid danger or mistakes.</meaning>
+      <category>AU Sound</category>
+    </question>
+    <question id="10">
+      <word>astronaut</word>
+      <hint>The brave ______ floated weightlessly outside the space station.</hint>
+      <meaning>A person trained to travel in a spacecraft.</meaning>
+      <category>AU Sound</category>
+    </question>
+  </set>
+  <set id="6" player="younger" name="Set 6: Phonics – 'AW' Sound">
+    <question id="1">
+      <word>crawl</word>
+      <hint>The curious baby started to ______ across the soft rug.</hint>
+      <meaning>Move forward on the hands and knees.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="2">
+      <word>yawn</word>
+      <hint>When you feel sleepy, you might open your mouth and ______.</hint>
+      <meaning>Involuntarily open the mouth wide and inhale deeply.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="3">
+      <word>lawn</word>
+      <hint>Dad mowed the green grass on the front ______ this morning.</hint>
+      <meaning>An area of closely cut grass in a garden or park.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="4">
+      <word>draw</word>
+      <hint>Marc used coloured pencils to ______ a majestic castle.</hint>
+      <meaning>Produce a picture or diagram by making lines and marks.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="5">
+      <word>claw</word>
+      <hint>The golden eagle snatched a twig with its sharp curved ______.</hint>
+      <meaning>A curved, pointed nail on each digit of the foot in birds or animals.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="6">
+      <word>hawk</word>
+      <hint>A fierce predatory ______ soared high above the open fields.</hint>
+      <meaning>A bird of prey with broad rounded wings and a long tail.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="7">
+      <word>straw</word>
+      <hint>He drank his cold strawberry smoothie through a paper ______.</hint>
+      <meaning>A thin tube of paper or plastic for sucking up liquids.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="8">
+      <word>prawn</word>
+      <hint>Mum cooked noodles with fresh juicy garlic ______ for dinner.</hint>
+      <meaning>A marine crustacean resembling a large shrimp.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="9">
+      <word>shawl</word>
+      <hint>Grandma wrapped a warm woollen ______ around her shoulders.</hint>
+      <meaning>A piece of fabric worn over the shoulders or head.</meaning>
+      <category>AW Sound</category>
+    </question>
+    <question id="10">
+      <word>dawn</word>
+      <hint>The rooster crowed early in the morning just before ______.</hint>
+      <meaning>The first appearance of light in the sky before sunrise.</meaning>
+      <category>AW Sound</category>
+    </question>
+  </set>
+  <set id="7" player="younger" name="Set 7: Phonics – 'OW' Sound">
+    <question id="1">
+      <word>crown</word>
+      <hint>The royal prince wore a sparkling golden ______ on his head.</hint>
+      <meaning>An ornamental circular headdress worn by a monarch.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="2">
+      <word>brown</word>
+      <hint>The little puppy had fluffy dark ______ fur and floppy ears.</hint>
+      <meaning>A colour produced by mixing red, yellow, and blue.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="3">
+      <word>clown</word>
+      <hint>The cheerful circus ______ made funny balloon animals for everyone.</hint>
+      <meaning>A comic entertainer who wears traditional makeup and costume.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="4">
+      <word>crowd</word>
+      <hint>A cheering ______ gathered outside to welcome the champions.</hint>
+      <meaning>A large number of people gathered together in a disorganized way.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="5">
+      <word>frown</word>
+      <hint>A puzzled ______ appeared on his face when he read the riddle.</hint>
+      <meaning>A facial expression indicating displeasure, confusion, or concentration.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="6">
+      <word>growl</word>
+      <hint>The watchdog gave a deep warning ______ behind the fence.</hint>
+      <meaning>Make a low guttural sound of hostility in the throat.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="7">
+      <word>howl</word>
+      <hint>The wolf lifted its head to ______ at the bright full moon.</hint>
+      <meaning>Make a long, loud, doleful cry uttering sorrow or calling.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="8">
+      <word>tower</word>
+      <hint>We climbed the spiral stone steps up to the castle ______.</hint>
+      <meaning>A tall, narrow building or structure rising high in the air.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="9">
+      <word>shower</word>
+      <hint>A sudden refreshing rain ______ cooled down the hot summer day.</hint>
+      <meaning>A brief and usually light fall of rain, or a bath in sprayed water.</meaning>
+      <category>OW Sound</category>
+    </question>
+    <question id="10">
+      <word>flower</word>
+      <hint>A lovely yellow sunflower ______ bloomed brightly in the garden.</hint>
+      <meaning>The seed-bearing part of a plant, consisting of reproductive organs.</meaning>
+      <category>OW Sound</category>
+    </question>
+  </set>
+  <set id="8" player="older" name="Set 1: Column 1 (accommodate – bruise)">
     <question id="1">
       <word>accommodate</word>
       <hint>The grand holiday hotel had enough rooms to ______ all the guests comfortably.</hint>
@@ -330,7 +514,7 @@
       <category>Statutory Spellings (A-B)</category>
     </question>
   </set>
-  <set id="6" player="older" name="Set 2: Column 2 (category – desperate)">
+  <set id="9" player="older" name="Set 2: Column 2 (category – desperate)">
     <question id="1">
       <word>category</word>
       <hint>Each book in the local library is placed neatly in its correct ______.</hint>
@@ -422,7 +606,7 @@
       <category>Statutory Spellings (C-D)</category>
     </question>
   </set>
-  <set id="7" player="older" name="Set 3: Column 3 (determined – familiar)">
+  <set id="10" player="older" name="Set 3: Column 3 (determined – familiar)">
     <question id="1">
       <word>determined</word>
       <hint>Jasper was completely ______ to master every tricky spelling word before the test.</hint>
@@ -514,7 +698,7 @@
       <category>Statutory Spellings (D-F)</category>
     </question>
   </set>
-  <set id="8" player="older" name="Set 4: Column 4 (foreign – leisure)">
+  <set id="11" player="older" name="Set 4: Column 4 (foreign – leisure)">
     <question id="1">
       <word>foreign</word>
       <hint>Learning to speak a ______ language opens up exciting opportunities to travel.</hint>
@@ -606,7 +790,7 @@
       <category>Statutory Spellings (F-L)</category>
     </question>
   </set>
-  <set id="9" player="older" name="Set 5: Column 5 (lightning – privilege)">
+  <set id="12" player="older" name="Set 5: Column 5 (lightning – privilege)">
     <question id="1">
       <word>lightning</word>
       <hint>A blinding flash of ______ illuminated the stormy night sky before the thunder cracked.</hint>
@@ -698,7 +882,7 @@
       <category>Statutory Spellings (L-P)</category>
     </question>
   </set>
-  <set id="10" player="older" name="Set 6: Column 6 (profession – sincere)">
+  <set id="13" player="older" name="Set 6: Column 6 (profession – sincere)">
     <question id="1">
       <word>profession</word>
       <hint>Teaching is a highly respected ______ that shapes the minds of future generations.</hint>
@@ -790,7 +974,7 @@
       <category>Statutory Spellings (P-S)</category>
     </question>
   </set>
-  <set id="11" player="older" name="Set 7: Column 7 (sincerely – yacht)">
+  <set id="14" player="older" name="Set 7: Column 7 (sincerely – yacht)">
     <question id="1">
       <word>sincerely</word>
       <hint>He closed the polite business letter with the formal phrase 'Yours ______'.</hint>
